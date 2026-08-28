@@ -59,7 +59,6 @@ def transform_data(input_path: Path, output_path: Path) -> None:
         )
 
 
-
 def upload_to_minio(file_path: Path) -> None:
     """Dépose le fichier transformé dans le bucket curated de MinIO."""
     s3 = boto3.client(

@@ -1,24 +1,35 @@
 services:
+
   minio:
-    image: minio/minio
+    image: minio/minio:latest
     container_name: minio
     ports:
       - "9000:9000"
       - "9001:9001"
+    volumes:
+      - minio_data:/data
     environment:
       MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
       MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
     command: server /data --console-address ":9001"
-    volumes:
-      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   mongo:
-    image: mongo
+    image: mongo:latest
     container_name: mongo
     ports:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   partie1:
     build: .
@@ -27,12 +38,9 @@ services:
       MINIO_ENDPOINT: ${MINIO_ENDPOINT}
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
-      MONGO_URI: ${MONGO_URI}
-    volumes:
-      - ./data:/app/data
     depends_on:
-      - minio
-      - mongo
+      minio:
+        condition: service_healthy
 
   extract:
     build: .
@@ -43,10 +51,11 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     depends_on:
-      - minio
+      minio:
+        condition: service_healthy
     command: python src/partie2/extract.py
     volumes:
-    - ./export:/app/export
+      - ./export:/app/export
 
   transform:
     build: .
@@ -56,9 +65,32 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
     depends_on:
-      - minio
-      - extract
+      minio:
+        condition: service_healthy
+      extract:
+        condition: service_completed_successfully
     command: python src/partie2/transform.py
+    volumes:
+      - ./export:/app/export
+
+  load:
+    build: .
+    container_name: load
+    environment:
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MONGO_URL: ${MONGO_URL}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_COLLECTION: ${MONGO_COLLECTION}
+    depends_on:
+      minio:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+      transform:
+        condition: service_completed_successfully
+    command: python src/partie2/load.py
     volumes:
       - ./export:/app/export
 

@@ -30,7 +30,6 @@ def get_arrets_tram(database_url: str) -> pd.DataFrame:
         ORDER BY r.route_short_name, s.stop_name;
     """
 
-
     engine = create_engine(
         database_url.replace(
             "postgres://",
@@ -75,7 +74,6 @@ def main() -> None:
 
     output_path = Path("export/tram_stops.parquet")
     output_path.parent.mkdir(parents=True, exist_ok=True)
-
 
     dataframe = get_arrets_tram(database_url)
     dataframe.to_parquet(output_path, index=False)
