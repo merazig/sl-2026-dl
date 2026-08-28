@@ -2,3 +2,4 @@ env
 .ruff_cache
 .env
 export/
+data/tram_stops_downloaded.parquet
