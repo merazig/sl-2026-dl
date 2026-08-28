@@ -48,6 +48,20 @@ services:
     volumes:
     - ./export:/app/export
 
+  transform:
+    build: .
+    container_name: transform
+    environment:
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    depends_on:
+      - minio
+      - extract
+    command: python src/partie2/transform.py
+    volumes:
+      - ./export:/app/export
+
 volumes:
   minio_data:
   mongo_data:

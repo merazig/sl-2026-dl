@@ -35,26 +35,29 @@ def transform_data(input_path: Path, output_path: Path) -> None:
 
     with duckdb.connect() as connection:
         connection.execute(
-            """
+            f"""
             COPY (
                 SELECT DISTINCT
+                    route_id,
+                    route_short_name,
+                    route_type,
                     stop_id,
                     stop_name,
-                    route_name,
                     latitude,
                     longitude
-                FROM read_parquet(?)
+                FROM read_parquet('{input_file}')
                 WHERE stop_id IS NOT NULL
                   AND stop_name IS NOT NULL
-                  AND route_name IS NOT NULL
+                  AND route_id IS NOT NULL
+                  AND route_short_name IS NOT NULL
                   AND latitude BETWEEN -90 AND 90
                   AND longitude BETWEEN -180 AND 180
             )
-            TO ?
+            TO '{output_file}'
             (FORMAT PARQUET);
-            """,
-            [input_file, output_file],
+            """
         )
+
 
 
 def upload_to_minio(file_path: Path) -> None:
