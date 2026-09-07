@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ ./src/
 
-CMD ["python", "src/partie1/main.py"]
+CMD ["python", "-m", "src.partie1.main"]

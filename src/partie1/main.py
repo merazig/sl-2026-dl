@@ -1,8 +1,9 @@
 """Test de connexion à MinIO et MongoDB pour la partie 1."""
 
 import os
-import logging
+import time
 
+from src.logger import logger
 import boto3
 from botocore.exceptions import ClientError
 from pymongo import MongoClient
@@ -25,8 +26,6 @@ def main():
     file_path = "data/tram_stops.parquet"
     object_name = "tram_stops.parquet"
 
-    logger = logging.getLogger(__name__)
-    
     try:
         s3.head_bucket(Bucket=bucket_name)
         logger.info(f"Le bucket '{bucket_name}' existe déjà.")
@@ -47,7 +46,9 @@ def main():
     # =========================
     # MongoDB
     # =========================
-
+    
+    logger.info("Debut de Mongo")
+    start = time.perf_counter()
     mongo_client = MongoClient(os.environ["MONGO_URI"])
 
     try:
@@ -86,8 +87,11 @@ def main():
         ]
 
         collection.insert_many(documents)
+        end_time = time.perf_counter() - start
         logger.info("Documents ajoutés dans MongoDB.")
+        logger.info(f"Temps d'insertion: {round(end_time, 3)} secondes")
 
+        start = time.perf_counter()
         route = collection.find_one({"route_name": "T3a"})
         logger.info("Route trouvée :", route)
 
@@ -101,16 +105,14 @@ def main():
         ]
 
         results = collection.aggregate(pipeline)
-
+        end_time = time.perf_counter() - start
+        
         for result in results:
             logger.info(result)
+        logger.info(f"Temps de requête : {round(end_time, 3)} secondes")
     finally:
         mongo_client.close()
 
 
 if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    )
     main()

@@ -46,6 +46,8 @@ services:
         condition: service_healthy
     volumes:
       - ./data:/app/data
+      - ./logs:/app/logs
+
 
   extract:
     build: .
@@ -58,9 +60,10 @@ services:
     depends_on:
       minio:
         condition: service_healthy
-    command: python src/partie2/extract.py
+    command: python -m src.partie2.extract
     volumes:
       - ./export:/app/export
+      - ./logs:/app/logs
 
   transform:
     build: .
@@ -74,9 +77,10 @@ services:
         condition: service_healthy
       extract:
         condition: service_completed_successfully
-    command: python src/partie2/transform.py
+    command: python -m src.partie2.transform
     volumes:
       - ./export:/app/export
+      - ./logs:/app/logs
 
   load:
     build: .
@@ -95,9 +99,10 @@ services:
         condition: service_healthy
       transform:
         condition: service_completed_successfully
-    command: python src/partie2/load.py
+    command: python -m src.partie2.load
     volumes:
       - ./export:/app/export
+      - ./logs:/app/logs
 
 volumes:
   minio_data:

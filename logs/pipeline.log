@@ -1,0 +1,38 @@
+2026-09-07 14:14:32,658 INFO     pipeline        :0029 Le bucket 'raw' existe déjà.
+2026-09-07 14:14:32,679 INFO     pipeline        :0035 Fichier déposé dans MinIO.
+2026-09-07 14:14:32,704 INFO     pipeline        :0042 Fichier relu depuis MinIO.
+2026-09-07 14:14:32,713 INFO     pipeline        :0086 Documents ajoutés dans MongoDB.
+2026-09-07 14:14:32,715 INFO     pipeline        :0089 Route trouvée :
+2026-09-07 14:14:32,719 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec63df8e07afdc1055ac9'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:14:32,720 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec63df8e07afdc1055aca'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:14:32,721 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec6c8bb73f75950f29120'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:14:32,723 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec6c8bb73f75950f29121'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:15:18,697 INFO     pipeline        :0032 Le bucket 'raw' a été créé.
+2026-09-07 14:15:18,716 INFO     pipeline        :0035 Fichier déposé dans MinIO.
+2026-09-07 14:15:18,736 INFO     pipeline        :0042 Fichier relu depuis MinIO.
+2026-09-07 14:15:18,764 INFO     pipeline        :0086 Documents ajoutés dans MongoDB.
+2026-09-07 14:15:18,766 INFO     pipeline        :0089 Route trouvée :
+2026-09-07 14:15:18,768 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec6f69be0091263750102'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:15:18,768 INFO     pipeline        :0103 {'_id': ObjectId('6a9ec6f69be0091263750103'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:25:06,582 INFO     pipeline        :0031 Le bucket 'raw' existe déjà.
+2026-09-07 14:25:06,638 INFO     pipeline        :0037 Fichier déposé dans MinIO.
+2026-09-07 14:25:06,676 INFO     pipeline        :0044 Fichier relu depuis MinIO.
+2026-09-07 14:25:06,677 INFO     pipeline        :0050 Debut de Mongo
+2026-09-07 14:25:06,709 INFO     pipeline        :0091 Documents ajoutés dans MongoDB.
+2026-09-07 14:25:06,709 INFO     pipeline        :0092 Temps d'insertion: 0.03134903899990604
+2026-09-07 14:25:06,740 INFO     pipeline        :0096 Route trouvée :
+2026-09-07 14:25:06,756 INFO     pipeline        :0109 Temps de requête: 0.04643246100022225
+2026-09-07 14:25:06,757 INFO     pipeline        :0112 {'_id': ObjectId('6a9ec6f69be0091263750102'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:25:06,758 INFO     pipeline        :0112 {'_id': ObjectId('6a9ec6f69be0091263750103'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:25:06,758 INFO     pipeline        :0112 {'_id': ObjectId('6a9ec9422c2b545d66c5d806'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:25:06,759 INFO     pipeline        :0112 {'_id': ObjectId('6a9ec9422c2b545d66c5d807'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:28:27,436 INFO     pipeline        :0034 Le bucket 'raw' a été créé.
+2026-09-07 14:28:27,453 INFO     pipeline        :0037 Fichier déposé dans MinIO.
+2026-09-07 14:28:27,474 INFO     pipeline        :0044 Fichier relu depuis MinIO.
+2026-09-07 14:28:27,475 INFO     pipeline        :0050 Debut de Mongo
+2026-09-07 14:28:27,503 INFO     pipeline        :0091 Documents ajoutés dans MongoDB.
+2026-09-07 14:28:27,504 INFO     pipeline        :0092 Temps d'insertion: 0.027 secondes
+2026-09-07 14:28:27,508 INFO     pipeline        :0096 Route trouvée :
+2026-09-07 14:28:27,512 INFO     pipeline        :0111 {'_id': ObjectId('6a9eca0b5e32f21c8ed810b8'), 'route_name': 'T3a', 'number_of_stops': 2}
+2026-09-07 14:28:27,512 INFO     pipeline        :0111 {'_id': ObjectId('6a9eca0b5e32f21c8ed810b9'), 'route_name': 'T3b', 'number_of_stops': 1}
+2026-09-07 14:28:27,513 INFO     pipeline        :0112 Temps de requête : 0.007 secondes
