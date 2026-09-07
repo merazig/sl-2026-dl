@@ -1,6 +1,7 @@
 """Test de connexion à MinIO et MongoDB pour la partie 1."""
 
 import os
+import logging
 
 import boto3
 from botocore.exceptions import ClientError
@@ -24,22 +25,24 @@ def main():
     file_path = "data/tram_stops.parquet"
     object_name = "tram_stops.parquet"
 
+    logger = logging.getLogger(__name__)
+    
     try:
         s3.head_bucket(Bucket=bucket_name)
-        print(f"Le bucket '{bucket_name}' existe déjà.")
+        logger.info(f"Le bucket '{bucket_name}' existe déjà.")
     except ClientError:
         s3.create_bucket(Bucket=bucket_name)
-        print(f"Le bucket '{bucket_name}' a été créé.")
+        logger.info(f"Le bucket '{bucket_name}' a été créé.")
 
     s3.upload_file(file_path, bucket_name, object_name)
-    print("Fichier déposé dans MinIO.")
+    logger.info("Fichier déposé dans MinIO.")
 
     s3.download_file(
         bucket_name,
         object_name,
         "data/tram_stops_downloaded.parquet",
     )
-    print("Fichier relu depuis MinIO.")
+    logger.info("Fichier relu depuis MinIO.")
 
     # =========================
     # MongoDB
@@ -83,10 +86,10 @@ def main():
         ]
 
         collection.insert_many(documents)
-        print("Documents ajoutés dans MongoDB.")
+        logger.info("Documents ajoutés dans MongoDB.")
 
         route = collection.find_one({"route_name": "T3a"})
-        print("Route trouvée :", route)
+        logger.info("Route trouvée :", route)
 
         pipeline = [
             {
@@ -100,10 +103,14 @@ def main():
         results = collection.aggregate(pipeline)
 
         for result in results:
-            print(result)
+            logger.info(result)
     finally:
         mongo_client.close()
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
+    )
     main()

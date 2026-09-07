@@ -322,3 +322,11 @@ Séparer les deux zones permet de conserver la donnée brute et de distinguer cl
 Avec une seule zone, la donnée originale pourrait être écrasée par la donnée transformée. Il serait alors plus difficile de revenir à l'état initial ou de rejouer les transformations.
 
 Cette séparation permet donc de mieux assurer la traçabilité, la reproductibilité et la maintenance du pipeline.
+
+## Vérification
+
+Après l'exécution du pipeline :
+
+- 1. Le bucket `raw` doit contenir `tram_stops.parquet`.
+- 2. Le bucket `curated` doit contenir `tram_stops.parquet`.
+- 3. MongoDB doit contenir les documents regroupés par ligne.

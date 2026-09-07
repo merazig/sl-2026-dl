@@ -1,5 +1,6 @@
 boto3==1.43.82
 duckdb==1.5.5
+logging==0.4.9.6
 pandas==3.0.5
 psycopg2-binary==2.9.12
 pyarrow==25.0.1
